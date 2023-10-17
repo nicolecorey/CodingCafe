@@ -3,6 +3,7 @@ using CodingCafe.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingCafe.Migrations
 {
     [DbContext(typeof(CafeContext))]
-    partial class CafeContextModelSnapshot : ModelSnapshot
+    [Migration("20231017010520_AddDescription")]
+    partial class AddDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +40,9 @@ namespace CodingCafe.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Favorite")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FavoritesId")
@@ -69,8 +74,6 @@ namespace CodingCafe.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("FavoritesId");
-
                     b.ToTable("Customers");
 
                     b.HasData(
@@ -78,7 +81,7 @@ namespace CodingCafe.Migrations
                         {
                             ID = 1,
                             Email = "jacksmith@gmail.com",
-                            FavoritesId = 1,
+                            FavoritesId = 0,
                             FirstName = "Jack",
                             LastName = "Smith"
                         },
@@ -86,21 +89,21 @@ namespace CodingCafe.Migrations
                         {
                             ID = 2,
                             Email = "jillsmith@gmail.com",
-                            FavoritesId = 2,
+                            FavoritesId = 0,
                             FirstName = "Jill",
                             LastName = "Smith"
                         },
                         new
                         {
                             ID = 3,
-                            FavoritesId = 3,
+                            FavoritesId = 0,
                             FirstName = "Steve",
                             LastName = "Jobs"
                         },
                         new
                         {
                             ID = 4,
-                            FavoritesId = 4,
+                            FavoritesId = 0,
                             FirstName = "Bill",
                             LastName = "Gates"
                         });
@@ -117,49 +120,38 @@ namespace CodingCafe.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Item")
+                    b.Property<string>("Favorite")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FavoritesId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Favorite");
 
                     b.HasData(
                         new
                         {
                             FavoritesId = 1,
                             Description = "A dark, robust blend.",
-                            Item = "Javascript Java"
+                            Favorite = "Javascript Java"
                         },
                         new
                         {
                             FavoritesId = 2,
                             Description = "A light, decaf blend.",
-                            Item = ".NET Decaf"
+                            Favorite = ".NET Decaf"
                         },
                         new
                         {
                             FavoritesId = 3,
                             Description = "Traditional hot chocolate, with whip!",
-                            Item = "HTML Hot Cocoa"
+                            Favorite = "HTML Hot Cocoa"
                         },
                         new
                         {
                             FavoritesId = 4,
                             Description = "A tasty latte made with caramel and vanilla.",
-                            Item = "LINQ Latte"
+                            Favorite = "LINQ Latte"
                         });
-                });
-
-            modelBuilder.Entity("CodingCafe.Models.Customers", b =>
-                {
-                    b.HasOne("CodingCafe.Models.Favorites", "Favorites")
-                        .WithMany()
-                        .HasForeignKey("FavoritesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Favorites");
                 });
 #pragma warning restore 612, 618
         }

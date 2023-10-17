@@ -41,6 +41,10 @@ namespace CodingCafe.Models
 
         public string? Email { get; set; }
 
+        [Display(Name = "Favorite Coffee")]
+        public int FavoritesId { get; set; }
+        public Favorites? Favorites { get; set; }
+
         [Display(Name = "Phone")]
         public string? Phone { get; set; }
 
