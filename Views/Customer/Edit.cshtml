@@ -24,11 +24,6 @@
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GenderIdentity" class="control-label"></label>
-                <input asp-for="GenderIdentity" class="form-control" />
-                <span asp-validation-for="GenderIdentity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
@@ -59,9 +54,9 @@
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Favorites" class="control-label"></label>
-                <input asp-for="Favorites" class="form-control" />
-                <span asp-validation-for="Favorites" class="text-danger"></span>
+                <label asp-for="FavoritesId" class="control-label"></label>
+                <input asp-for="FavoritesId" class="form-control" asp-items="ViewBag.Favorites.Item" />
+                <span asp-validation-for="FavoritesId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" /> |     <a asp-action="Index">Back to List</a>

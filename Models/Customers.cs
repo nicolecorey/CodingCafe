@@ -1,21 +1,18 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace CodingCafe.Models
 {
-    public enum Gender
-    {
-        Male,
-        Female,
-        Nonbinary
-    }
     public class Customers
     {
         public int ID { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
+        [MinLength(2, ErrorMessage = "Please enter your first name (2 characters or more).")]
         [StringLength(30, ErrorMessage = "Please enter your first name (max 30 characters).")]
         public string? FirstName { get; set; }
 
@@ -24,26 +21,30 @@ namespace CodingCafe.Models
         [StringLength(30, ErrorMessage = "Please enter your Last name (max 30 characters).")]
         public string? LastName { get; set; }
 
-        [Display(Name = "Gender")]
-        public Gender? GenderIdentity { get; set; }
 
         [StringLength(50, ErrorMessage = "Please enter your address (max 50 characters)")]
         public string? Address { get; set; }
 
         [StringLength(30, ErrorMessage = "Please enter your city (max 30 characters)")]
+        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Only alphabetic letters are allowed.")]
         public string? City { get; set; }
 
-        [StringLength(2, ErrorMessage = "Please enter your state (2 characters, example: NY")]
+        [StringLength(2, ErrorMessage = "Please enter your state (2 characters, example: MI")]
+        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Only alphabetic letters are allowed.")]
         public string? State { get; set; }
 
-        [StringLength(10, ErrorMessage = "Please enter your zipcode (max 10 numbers)")]
+        [Range(5,10, ErrorMessage = "Please enter your zipcode (between 5 and 10 numbers)")]
         public string? Zip { get; set; }
 
+        [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
-        [Display(Name = "Favorite Coffee")]
+        [ForeignKey("FavoritesId")]
+        [DisplayName("Favorite Coffee")]
         public int FavoritesId { get; set; }
         public Favorites? Favorites { get; set; }
+
+
 
         [Display(Name = "Phone")]
         public string? Phone { get; set; }

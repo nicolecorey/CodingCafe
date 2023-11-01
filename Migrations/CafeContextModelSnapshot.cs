@@ -48,9 +48,6 @@ namespace CodingCafe.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("GenderIdentity")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -64,8 +61,7 @@ namespace CodingCafe.Migrations
                         .HasColumnType("nvarchar(2)");
 
                     b.Property<string>("Zip")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -117,37 +113,43 @@ namespace CodingCafe.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Item")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FavoritesId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Favorites");
 
                     b.HasData(
                         new
                         {
                             FavoritesId = 1,
                             Description = "A dark, robust blend.",
-                            Item = "Javascript Java"
+                            Name = "Javascript Java"
                         },
                         new
                         {
                             FavoritesId = 2,
                             Description = "A light, decaf blend.",
-                            Item = ".NET Decaf"
+                            Name = ".NET Decaf"
                         },
                         new
                         {
                             FavoritesId = 3,
                             Description = "Traditional hot chocolate, with whip!",
-                            Item = "HTML Hot Cocoa"
+                            Name = "HTML Hot Cocoa"
                         },
                         new
                         {
                             FavoritesId = 4,
                             Description = "A tasty latte made with caramel and vanilla.",
-                            Item = "LINQ Latte"
+                            Name = "LINQ Latte"
+                        },
+                        new
+                        {
+                            FavoritesId = 6,
+                            Description = "A delicious hazelnut chai latte.",
+                            Name = "Cyber Chai"
                         });
                 });
 

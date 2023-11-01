@@ -21,9 +21,8 @@ namespace CodingCafe.Controllers
         // GET: Customer
         public async Task<IActionResult> Index()
         {
-              return _context.Customers != null ? 
-                          View(await _context.Customers.ToListAsync()) :
-                          Problem("Entity set 'CafeContext.Customers'  is null.");
+            var cafeContext = _context.Customers.Include(c => c.Favorites);
+            return View(await cafeContext.ToListAsync());
         }
 
         // GET: Customer/Details/5
@@ -35,6 +34,7 @@ namespace CodingCafe.Controllers
             }
 
             var customers = await _context.Customers
+                .Include(c => c.Favorites)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (customers == null)
             {
@@ -47,6 +47,7 @@ namespace CodingCafe.Controllers
         // GET: Customer/Create
         public IActionResult Create()
         {
+            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "FavoritesId");
             return View();
         }
 
@@ -55,7 +56,7 @@ namespace CodingCafe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,GenderIdentity,Address,City,State,Zip,Email,Phone")] Customers customers)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,Address,City,State,Zip,Email,FavoritesID,Phone")] Customers customers)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +64,7 @@ namespace CodingCafe.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "FavoritesId", customers.FavoritesId);
             return View(customers);
         }
 
@@ -79,6 +81,7 @@ namespace CodingCafe.Controllers
             {
                 return NotFound();
             }
+            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "FavoritesId", customers.FavoritesId);
             return View(customers);
         }
 
@@ -87,7 +90,7 @@ namespace CodingCafe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,GenderIdentity,Address,City,State,Zip,Email,Phone")] Customers customers)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName,Address,City,State,Zip,Email,FavoritesId,Phone")] Customers customers)
         {
             if (id != customers.ID)
             {
@@ -114,10 +117,12 @@ namespace CodingCafe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "FavoritesId", customers.FavoritesId);
             return View(customers);
-        }
 
-        // GET: Customer/Delete/5
+        }
+        //DELETE
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Customers == null)
@@ -126,6 +131,7 @@ namespace CodingCafe.Controllers
             }
 
             var customers = await _context.Customers
+                .Include(c => c.Favorites)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (customers == null)
             {
@@ -135,7 +141,7 @@ namespace CodingCafe.Controllers
             return View(customers);
         }
 
-        // POST: Customer/Delete/5
+        // POST: Customers2/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -149,14 +155,14 @@ namespace CodingCafe.Controllers
             {
                 _context.Customers.Remove(customers);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CustomersExists(int id)
         {
-          return (_context.Customers?.Any(e => e.ID == id)).GetValueOrDefault();
+            return (_context.Customers?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

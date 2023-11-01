@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingCafe.Migrations
 {
     [DbContext(typeof(CafeContext))]
-    [Migration("20231017185101_updatingvalues")]
-    partial class updatingvalues
+    [Migration("20231101152449_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,8 @@ namespace CodingCafe.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<int?>("GenderIdentity")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Gender");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -66,8 +67,7 @@ namespace CodingCafe.Migrations
                         .HasColumnType("nvarchar(2)");
 
                     b.Property<string>("Zip")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -150,6 +150,12 @@ namespace CodingCafe.Migrations
                             FavoritesId = 4,
                             Description = "A tasty latte made with caramel and vanilla.",
                             Item = "LINQ Latte"
+                        },
+                        new
+                        {
+                            FavoritesId = 6,
+                            Description = "A delicious hazelnut chai latte.",
+                            Item = "Cyber Chai"
                         });
                 });
 

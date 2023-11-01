@@ -21,20 +21,20 @@ namespace CodingCafe.Controllers
         // GET: Favorites
         public async Task<IActionResult> Index()
         {
-              return _context.Item != null ? 
-                          View(await _context.Item.ToListAsync()) :
-                          Problem("Entity set 'CafeContext.Favorite'  is null.");
+              return _context.Favorites != null ? 
+                          View(await _context.Favorites.ToListAsync()) :
+                          Problem("Entity set 'CafeContext.Favorites'  is null.");
         }
 
         // GET: Favorites/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Item == null)
+            if (id == null || _context.Favorites == null)
             {
                 return NotFound();
             }
 
-            var favorites = await _context.Item
+            var favorites = await _context.Favorites
                 .FirstOrDefaultAsync(m => m.FavoritesId == id);
             if (favorites == null)
             {
@@ -55,7 +55,7 @@ namespace CodingCafe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FavoritesId,Item")] Favorites favorites)
+        public async Task<IActionResult> Create([Bind("FavoritesId,Name,Description")] Favorites favorites)
         {
             if (ModelState.IsValid)
             {
@@ -69,17 +69,17 @@ namespace CodingCafe.Controllers
         // GET: Favorites/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Item == null)
+            if (id == null || _context.Favorites == null)
             {
                 return NotFound();
             }
 
-            var favorites = await _context.Item.FindAsync(id);
-            if (favorites == null)
+            var item = await _context.Favorites.FindAsync(id);
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(favorites);
+            return View(item);
         }
 
         // POST: Favorites/Edit/5
@@ -87,7 +87,7 @@ namespace CodingCafe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FavoritesId,Item")] Favorites favorites)
+        public async Task<IActionResult> Edit(int id, [Bind("FavoritesId,Name,Description")] Favorites favorites)
         {
             if (id != favorites.FavoritesId)
             {
@@ -120,12 +120,12 @@ namespace CodingCafe.Controllers
         // GET: Favorites/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Item == null)
+            if (id == null || _context.Favorites == null)
             {
                 return NotFound();
             }
 
-            var favorites = await _context.Item
+            var favorites = await _context.Favorites
                 .FirstOrDefaultAsync(m => m.FavoritesId == id);
             if (favorites == null)
             {
@@ -140,14 +140,14 @@ namespace CodingCafe.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Item == null)
+            if (_context.Favorites == null)
             {
-                return Problem("Entity set 'CafeContext.Favorite'  is null.");
+                return Problem("Entity set 'CafeContext.Favorites'  is null.");
             }
-            var favorites = await _context.Item.FindAsync(id);
+            var favorites = await _context.Favorites.FindAsync(id);
             if (favorites != null)
             {
-                _context.Item.Remove(favorites);
+                _context.Favorites.Remove(favorites);
             }
             
             await _context.SaveChangesAsync();
@@ -156,7 +156,7 @@ namespace CodingCafe.Controllers
 
         private bool FavoritesExists(int id)
         {
-          return (_context.Item?.Any(e => e.FavoritesId == id)).GetValueOrDefault();
+            return (_context.Favorites?.Any(e => e.FavoritesId == id)).GetValueOrDefault();
         }
     }
 }

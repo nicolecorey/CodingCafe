@@ -1,5 +1,4 @@
-﻿using Humanizer.Localisation;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,17 @@ namespace CodingCafe.Models
         public CafeContext(DbContextOptions<CafeContext> options) : base(options)
         { }
         public DbSet<Customers> Customers { get; set; }
-        public DbSet<Favorites> Item { get; set; }
+        public DbSet<Favorites> Favorites { get; set; }
 
              protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
            
             modelBuilder.Entity<Favorites>().HasData(
-                new Favorites { FavoritesId = 1, Item = "Javascript Java", Description = "A dark, robust blend." },
-                new Favorites { FavoritesId = 2, Item = ".NET Decaf", Description = "A light, decaf blend." },
-                new Favorites { FavoritesId = 3, Item = "HTML Hot Cocoa", Description = "Traditional hot chocolate, with whip!" },
-                new Favorites { FavoritesId = 4, Item = "LINQ Latte", Description = "A tasty latte made with caramel and vanilla." }
-
+                new Favorites { FavoritesId = 1, Name = "Javascript Java", Description = "A dark, robust blend." },
+                new Favorites { FavoritesId = 2, Name = ".NET Decaf", Description = "A light, decaf blend." },
+                new Favorites { FavoritesId = 3, Name = "HTML Hot Cocoa", Description = "Traditional hot chocolate, with whip!" },
+                new Favorites { FavoritesId = 4, Name = "LINQ Latte", Description = "A tasty latte made with caramel and vanilla." },
+                new Favorites { FavoritesId = 6, Name = "Cyber Chai", Description = "A delicious hazelnut chai latte."}
               );
             modelBuilder.Entity<Customers>().HasData(
                new Customers { ID = 1, FavoritesId = 1, FirstName = "Jack", LastName = "Smith", Email = "jacksmith@gmail.com"},

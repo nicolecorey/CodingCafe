@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingCafe.Migrations
 {
     [DbContext(typeof(CafeContext))]
-    [Migration("20231001221109_initialCreate")]
-    partial class initialCreate
+    [Migration("20231101154140_Migration1")]
+    partial class Migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.20")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -42,13 +42,16 @@ namespace CodingCafe.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FavoritesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("GenderIdentity")
-                        .HasColumnType("int");
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -63,10 +66,11 @@ namespace CodingCafe.Migrations
                         .HasColumnType("nvarchar(2)");
 
                     b.Property<string>("Zip")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("FavoritesId");
 
                     b.ToTable("Customers");
 
@@ -75,6 +79,7 @@ namespace CodingCafe.Migrations
                         {
                             ID = 1,
                             Email = "jacksmith@gmail.com",
+                            FavoritesId = 1,
                             FirstName = "Jack",
                             LastName = "Smith"
                         },
@@ -82,27 +87,86 @@ namespace CodingCafe.Migrations
                         {
                             ID = 2,
                             Email = "jillsmith@gmail.com",
+                            FavoritesId = 2,
                             FirstName = "Jill",
                             LastName = "Smith"
                         },
                         new
                         {
                             ID = 3,
+                            FavoritesId = 3,
                             FirstName = "Steve",
                             LastName = "Jobs"
                         },
                         new
                         {
                             ID = 4,
+                            FavoritesId = 4,
                             FirstName = "Bill",
                             LastName = "Gates"
+                        });
+                });
+
+            modelBuilder.Entity("CodingCafe.Models.Favorites", b =>
+                {
+                    b.Property<int>("FavoritesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoritesId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Item")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("FavoritesId");
+
+                    b.ToTable("Item");
+
+                    b.HasData(
+                        new
+                        {
+                            FavoritesId = 1,
+                            Description = "A dark, robust blend.",
+                            Item = "Javascript Java"
                         },
                         new
                         {
-                            ID = 5,
-                            FirstName = "Mark",
-                            LastName = "Zuckerberg"
+                            FavoritesId = 2,
+                            Description = "A light, decaf blend.",
+                            Item = ".NET Decaf"
+                        },
+                        new
+                        {
+                            FavoritesId = 3,
+                            Description = "Traditional hot chocolate, with whip!",
+                            Item = "HTML Hot Cocoa"
+                        },
+                        new
+                        {
+                            FavoritesId = 4,
+                            Description = "A tasty latte made with caramel and vanilla.",
+                            Item = "LINQ Latte"
+                        },
+                        new
+                        {
+                            FavoritesId = 6,
+                            Description = "A delicious hazelnut chai latte.",
+                            Item = "Cyber Chai"
                         });
+                });
+
+            modelBuilder.Entity("CodingCafe.Models.Customers", b =>
+                {
+                    b.HasOne("CodingCafe.Models.Favorites", "Favorites")
+                        .WithMany()
+                        .HasForeignKey("FavoritesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Favorites");
                 });
 #pragma warning restore 612, 618
         }

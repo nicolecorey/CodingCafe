@@ -4,12 +4,12 @@ namespace CodingCafe.Models
 {
     public class Favorites
     {
+        [Display(Name = "Favorite ID")]
         public int FavoritesId { get; set; }
 
-        [Display(Name = "Item")]
-        public string? Item { get; set; }
+        [Display(Name = "Favorite Coffee")]
+        public string? Name { get; set; }
 
-        [Display(Name = "Description")]
         public string? Description { get; set; }
     }
 }
