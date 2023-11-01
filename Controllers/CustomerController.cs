@@ -56,7 +56,7 @@ namespace CodingCafe.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,Address,City,State,Zip,Email,FavoritesID,Phone")] Customers customers)
+        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName,Address,City,State,Zip,Email,FavoritesId,Name,Phone")] Customers customers)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace CodingCafe.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "FavoritesId", customers.FavoritesId);
+            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "Name", customers.FavoritesId);
             return View(customers);
         }
 
@@ -117,7 +117,7 @@ namespace CodingCafe.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "FavoritesId", customers.FavoritesId);
+            ViewData["Name"] = new SelectList(_context.Favorites, "FavoritesId", "Name", customers.FavoritesId);
             return View(customers);
 
         }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingCafe.Migrations
 {
     [DbContext(typeof(CafeContext))]
-    [Migration("20231101160914_MigrationTableChanges")]
-    partial class MigrationTableChanges
+    [Migration("20231101165231_ForeignKeyUpdate")]
+    partial class ForeignKeyUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,43 +115,43 @@ namespace CodingCafe.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Item")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FavoritesId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Favorites");
 
                     b.HasData(
                         new
                         {
                             FavoritesId = 1,
                             Description = "A dark, robust blend.",
-                            Item = "Javascript Java"
+                            Name = "Javascript Java"
                         },
                         new
                         {
                             FavoritesId = 2,
                             Description = "A light, decaf blend.",
-                            Item = ".NET Decaf"
+                            Name = ".NET Decaf"
                         },
                         new
                         {
                             FavoritesId = 3,
                             Description = "Traditional hot chocolate, with whip!",
-                            Item = "HTML Hot Cocoa"
+                            Name = "HTML Hot Cocoa"
                         },
                         new
                         {
                             FavoritesId = 4,
                             Description = "A tasty latte made with caramel and vanilla.",
-                            Item = "LINQ Latte"
+                            Name = "LINQ Latte"
                         },
                         new
                         {
                             FavoritesId = 6,
                             Description = "A delicious hazelnut chai latte.",
-                            Item = "Cyber Chai"
+                            Name = "Cyber Chai"
                         });
                 });
 
