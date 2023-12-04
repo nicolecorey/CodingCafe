@@ -33,7 +33,7 @@ namespace CodingCafe.Models
         [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Only alphabetic letters are allowed.")]
         public string? State { get; set; }
 
-        [Range(5,10, ErrorMessage = "Please enter your zipcode (between 5 and 10 numbers)")]
+        //[Range(5,10, ErrorMessage = "Please enter your zipcode (between 5 and 10 numbers)")]
         public string? Zip { get; set; }
 
         [DataType(DataType.EmailAddress)]
@@ -42,7 +42,7 @@ namespace CodingCafe.Models
         [ForeignKey("FavoritesId")]
         [DisplayName("Favorite Coffee")]
         public int FavoritesId { get; set; }
-        public Favorites? Favorites { get; set; }
+        public Favorites Favorites { get; set; }
 
 
 

@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="ID" asp-route-id="id" />
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -55,7 +55,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="FavoritesId" class="control-label"></label>
-                <input asp-for="FavoritesId" class="form-control" asp-items="ViewBag.FavoritesId" />
+                <select asp-for="FavoritesId" asp-items="@ViewBag.Name" class="form-control"></select>
                 <span asp-validation-for="FavoritesId" class="text-danger"></span>
             </div>
             <div class="form-group">
